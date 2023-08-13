@@ -1,7 +1,13 @@
 from sklearn.model_selection import train_test_split
 import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.multioutput import MultiOutputRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.tree import DecisionTreeRegressor
+import warnings
+warnings.filterwarnings("ignore")
 
-data = pd.read_csv('total.csv', usecols=["1st Half Home Ball Possession", "1st Half Home Goal Attempts", 
+data = pd.read_csv('ligue-1.csv', usecols=["1st Half Home Ball Possession", "1st Half Home Goal Attempts", 
                                                      "1st Half Home Shots on Goal", "1st Half Home Shots off Goal", 
                                                      "1st Half Home Corner Kicks", "1st Half Home Attacks", "1st Half Home Dangerous Attacks", 
                                                      "1st Half Away Ball Possession", "1st Half Away Goal Attempts", 
@@ -13,12 +19,28 @@ X = data.drop(['2nd Half Home Goals', '2nd Half Away Goals'], axis=1)
 y = data[['2nd Half Home Goals', '2nd Half Away Goals']]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-from sklearn.tree import DecisionTreeRegressor
+
+# predict the values of X and Y
+new_data = [[46,5,2,2,1,50,19,54,7,2,3,5,71,19,1,2]]
+
 dt = DecisionTreeRegressor(max_depth=5, random_state=42)
 dt.fit(X_train, y_train)
-
 y_pred = dt.predict(X_test)
-
-new_data = [[]]
 new_pred = dt.predict(new_data)
 print(new_pred)
+
+
+model = LinearRegression()
+model.fit(X, y)
+pred = model.predict(new_data)
+print(pred)
+
+model = MultiOutputRegressor(RandomForestRegressor(n_estimators=100, random_state=0))
+model.fit(X, y)
+predicted = model.predict(new_data)
+print(predicted)
+
+rf = RandomForestRegressor()
+rf.fit(X, y)
+prediction = rf.predict(new_data)
+print(prediction)
