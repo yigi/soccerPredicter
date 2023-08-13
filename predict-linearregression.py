@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 # read the csv file
-data = pd.read_csv('data/result/total.csv', usecols=["1st Half Home Ball Possession", "1st Half Home Goal Attempts", 
+data = pd.read_csv('total.csv', usecols=["1st Half Home Ball Possession", "1st Half Home Goal Attempts", 
                                                      "1st Half Home Shots on Goal", "1st Half Home Shots off Goal", 
                                                      "1st Half Home Corner Kicks", "1st Half Home Attacks", "1st Half Home Dangerous Attacks", 
                                                      "1st Half Away Ball Possession", "1st Half Away Goal Attempts", 
